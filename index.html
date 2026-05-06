@@ -7,15 +7,16 @@
     <style>
         /* === VARIABLES & RESET === */
         :root {
-            --bg-color: #0b1120;
-            --bg-card: #1e293b;
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent-primary: #38bdf8;
-            --accent-secondary: #818cf8;
+            --bg-color: #080f1e;
+            --bg-card: #151e32;
+            --bg-card-hover: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #8b5cf6;
             --danger: #ef4444;
             --warning: #f59e0b;
-            --nav-height: 80px; /* Hauteur fixe pour le calcul du scroll */
+            --nav-height: 70px;
         }
 
         * {
@@ -26,210 +27,346 @@
 
         html {
             scroll-behavior: smooth;
-            /* Empêche le menu fixe de cacher le haut des sections lors du clic */
             scroll-padding-top: var(--nav-height); 
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.8;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Arrière-plan décoratif (Blobs) */
+        .bg-blob {
+            position: absolute;
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--accent-primary); }
+        .blob-2 { top: 40%; right: -20%; width: 60vw; height: 60vw; background: var(--accent-secondary); }
+        .blob-3 { bottom: -10%; left: 20%; width: 40vw; height: 40vw; background: var(--accent-primary); }
+
+        /* === PROGRESS BAR === */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 2000;
+        }
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            width: 0%;
+            transition: width 0.1s;
         }
 
         /* === NAVIGATION === */
         nav {
             position: fixed;
-            top: 0;
+            top: 4px; /* Sous la progress bar */
             width: 100%;
             height: var(--nav-height);
-            background: rgba(11, 17, 32, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(8, 15, 30, 0.85);
+            backdrop-filter: blur(15px);
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 2.5rem;
             z-index: 1000;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         nav a {
             color: var(--text-main);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s, transform 0.3s;
-            white-space: nowrap;
+            letter-spacing: 1.5px;
+            transition: color 0.3s;
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active-link {
             color: var(--accent-primary);
-            transform: translateY(-2px);
         }
 
-        /* === EN-TÊTE (HEADER) === */
+        /* === HEADER === */
         header {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: calc(var(--nav-height) + 2rem) 2rem 4rem; /* Évite que le menu cache le haut */
-            background: radial-gradient(circle at top center, #1e293b 0%, var(--bg-color) 70%);
+            padding: calc(var(--nav-height) + 2rem) 2rem 4rem;
+            text-align: center;
         }
 
         .academic-details {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(129, 140, 248, 0.2);
-            border-radius: 12px;
-            max-width: 600px;
-            width: 100%;
+            margin-bottom: 4rem;
+            padding: 2rem 3rem;
+            background: rgba(21, 30, 50, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
         }
 
         .academic-details p {
-            margin-bottom: 0.5rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
         }
 
         .academic-details .names {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-main);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            letter-spacing: 0.5px;
         }
 
         header h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            text-align: center;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: linear-gradient(135deg, #fff, var(--text-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            color: var(--text-muted);
-            text-align: center;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--accent-primary);
             max-width: 800px;
-            margin: 0 auto;
+            font-weight: 400;
         }
 
         /* === SECTIONS GÉNÉRALES === */
         section {
-            padding: 6rem 2rem;
+            padding: 8rem 2rem;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-        }
-
-        section:nth-child(odd) {
-            background: rgba(30, 41, 59, 0.3);
+            align-items: center;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
         }
 
         h2 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            margin-bottom: 3rem;
-            color: var(--text-main);
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
+            font-weight: 800;
         }
 
         h2::before {
             content: "";
             display: block;
-            width: 40px;
+            width: 50px;
             height: 4px;
-            background: var(--accent-primary);
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
             border-radius: 2px;
-        }
-
-        h3 {
-            font-size: 1.3rem;
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-            line-height: 1.4;
         }
 
         p {
             margin-bottom: 1.5rem;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            color: var(--text-muted);
         }
 
-        /* === CARTES (CARDS) === */
-        .grid {
+        .citation {
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+            vertical-align: super;
+            margin-left: 2px;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        /* === FLIP CARDS (Définitions) === */
+        .flip-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            margin-top: 3rem;
+            perspective: 1000px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 350px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(145deg, var(--bg-card), var(--bg-color));
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .flip-card-front h3 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .flip-card-front .hint {
+            font-size: 0.9rem;
+            color: var(--accent-primary);
+            opacity: 0.8;
+            margin-top: auto;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(145deg, var(--accent-secondary), var(--accent-primary));
+            color: #fff;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back p {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* === ONGLETS INTERACTIFS (Butlin) === */
+        .tabs-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            margin-top: 3rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-primary);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === CARTES STANDARD === */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         .card {
             background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 2.5rem;
+            border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: transform 0.4s ease, border-color 0.4s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-secondary);
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.15);
         }
 
-        .card-full {
-            grid-column: 1 / -1; /* Prend toute la largeur disponible */
-        }
-
-        ul.styled-list {
-            list-style: none;
+        .card h3 {
+            color: var(--text-main);
+            font-size: 1.4rem;
             margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        ul.styled-list li {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        ul.styled-list li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--accent-primary);
-            font-weight: bold;
-        }
-
-        .source-box {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            border-left: 3px solid var(--accent-secondary);
-            padding: 1rem;
-            background: rgba(129, 140, 248, 0.05);
-            border-radius: 0 8px 8px 0;
-            margin-top: 1.5rem;
-            font-style: italic;
-        }
-
-        /* === ANIMATIONS (SCROLL REVEAL) === */
+        /* === ANIMATIONS SCROLL === */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
@@ -238,53 +375,40 @@
             transform: translateY(0);
         }
 
-        /* === RESPONSIVE DESIGN (MOBILE) === */
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             nav {
                 justify-content: flex-start;
                 padding: 0 1.5rem;
                 overflow-x: auto;
-                /* Masquer la scrollbar pour un look épuré */
                 -ms-overflow-style: none;  
                 scrollbar-width: none;  
             }
-            
-            nav::-webkit-scrollbar { 
-                display: none; 
-            }
+            nav::-webkit-scrollbar { display: none; }
+            nav::after { content: ''; padding-right: 1.5rem; }
 
-            /* Ajout d'un espacement factice pour que le dernier élément du menu ne soit pas collé */
-            nav::after {
-                content: '';
-                padding-right: 1.5rem;
-            }
-
-            header {
-                padding-top: calc(var(--nav-height) + 2rem);
-            }
-
-            section {
-                padding: 4rem 1.5rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-            
-            /* Sur mobile, on annule le card-full pour éviter des bugs de grille */
-            .card-full {
-                grid-column: span 1;
-            }
+            .tabs-header { flex-direction: column; }
+            .grid-2 { grid-template-columns: 1fr; }
+            section { padding: 5rem 1.5rem; }
+            .tab-content { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
     <nav>
-        <a href="#intro">Introduction</a>
-        <a href="#definitions">1. Définitions</a>
-        <a href="#butlin">2. Critères</a>
-        <a href="#philosophie">3. Philosophie</a>
+        <a href="#intro">Accueil</a>
+        <a href="#definitions">1. L'Illusion</a>
+        <a href="#butlin">2. Critères Techniques</a>
+        <a href="#philosophie">3. Autres Esprits</a>
         <a href="#ethique">4. Éthique</a>
         <a href="#sources">Sources</a>
     </nav>
@@ -294,8 +418,7 @@
             <p class="names">Mohamed Maazoun, Noémie Desgroseilliers & Alexey Lutsenko</p>
             <p>Travail présenté à Frédéric Kantorowsi</p>
             <p>Dans le cadre du cours 340-CC3-VM</p>
-            <p>Cégep du Vieux-Montréal</p>
-            <p>16 avril 2026</p>
+            <p>Cégep du Vieux-Montréal | 16 avril 2026</p>
         </div>
 
         <h1 class="reveal">Conscients ou non ?</h1>
@@ -304,43 +427,66 @@
 
     <section id="definitions">
         <div class="container">
-            <h2 class="reveal">1. Définitions Clés : Sentience et Intelligence</h2>
-            <p class="reveal">Dans le contexte de notre analyse portant sur les IA conversationnelles contemporaines, il est primordial de distinguer deux concepts souvent confondus par le grand public : l'intelligence et la sentience.</p>
+            <h2 class="reveal">1. L'Illusion de la Conversation</h2>
+            <p class="reveal">L'engouement du public pour les IA conversationnelles repose souvent sur une confusion fondamentale. [span_0](start_span)Ces modèles donnent fréquemment l’illusion qu’ils sont conscients aux utilisateurs <span class="citation">[span_0](end_span)</span>. Pour démystifier ce phénomène, il faut séparer rigoureusement deux concepts.</p>
             
-            <div class="grid">
-                <div class="card reveal">
-                    <h3>L'Intelligence</h3>
-                    <p>L'intelligence se définit ici comme la capacité d'un système à traiter de l'information complexe, à résoudre des problèmes et à générer du langage de manière cohérente. Les modèles actuels excellent dans ce domaine, manipulant la syntaxe et la sémantique avec une aisance remarquable.</p>
-                </div>
-                
-                <div class="card reveal">
-                    <h3>La Sentience</h3>
-                    <p>La sentience, en revanche, désigne la capacité d'éprouver des sensations et de posséder une expérience subjective. C'est ce que les philosophes appellent le « ce que ça fait d'être » (l'effet que cela fait d'exister en tant que cette entité).</p>
+            <div class="flip-grid reveal">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Sentience</h3>
+                            <span class="hint">Survolez pour révéler ⟳</span>
+                        </div>
+                        <div class="flip-card-back">
+                            [span_1](start_span)<p>La sentience est la capacité d'éprouver des sensations, d'avoir une expérience subjective <span class="citation">[span_1](end_span)</span>. C'est le « ce que ça fait d'être » une entité.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card card-full reveal">
-                    <h3>Le Constat Actuel</h3>
-                    <p>Les modèles de langage contemporains donnent fréquemment l’illusion aux utilisateurs d'être conscients. Cependant, notre réflexion met en lumière un fait crucial : une réponse verbale ne suffit pas à prouver une expérience vécue. Les systèmes actuels sont hautement intelligents, mais leur sentience reste une énigme profonde.</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Intelligence</h3>
+                            <span class="hint">Survolez pour révéler ⟳</span>
+                        </div>
+                        <div class="flip-card-back">
+                            [span_2](start_span)<p>L'intelligence est la capacité de traiter de l'information, de résoudre des problèmes et de générer du langage <span class="citation">[span_2](end_span)</span>.</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="card reveal" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
+                [span_3](start_span)<p style="margin: 0; color: var(--text-main);"><strong>Le constat implacable :</strong> Les modèles actuels sont hautement intelligents, mais leur sentience reste une énigme car une réponse verbale ne suffit pas à prouver une expérience vécue <span class="citation">[span_3](end_span)</span>. [span_4](start_span)Plusieurs recherches récentes insistent sur le fait qu’une réponse verbale ne suffit pas pour prouver la présence d’une conscience <span class="citation">[span_4](end_span)</span>.</p>
             </div>
         </div>
     </section>
 
-    <section id="butlin">
+    <section id="butlin" style="background: rgba(0,0,0,0.2);">
         <div class="container">
-            <h2 class="reveal">2. L'Approche Technique de Butlin</h2>
-            <p class="reveal">Puisqu'une simple conversation ne suffit pas, nous devons nous tourner vers l'architecture même de ces systèmes. L'approche interdisciplinaire proposée par Butlin et ses collaborateurs identifie des « propriétés indicatrices » issues des neurosciences pour évaluer la probabilité d'une conscience artificielle.</p>
+            <h2 class="reveal">2. Les Critères Architecturaux</h2>
+            [span_5](start_span)<p class="reveal">Pour dépasser la simple illusion linguistique, l'équipe de Patrick Butlin propose une approche interdisciplinaire, s'appuyant à la fois sur l'apprentissage automatique et les neurosciences pour évaluer la probabilité d'une conscience artificielle <span class="citation">[span_5](end_span)</span>. [span_6](start_span)Ils y identifient des « propriétés indicatrices » à rechercher au sein des systèmes d'IA <span class="citation">[span_6](end_span)</span>.</p>
             
-            <div class="grid">
-                <div class="card card-full reveal">
-                    <ul class="styled-list">
-                        <li><strong>Le « Global Workspace » :</strong> Contrairement aux IA actuelles qui sont souvent compartimentées, une IA consciente nécessiterait un système où l'information est partagée globalement entre différentes fonctions (mémoire, analyse, action) afin de créer une véritable unité de pensée.</li>
-                        <li><strong>Le Traitement Récurrent :</strong> Les modèles actuels traitent généralement l'information en ligne droite (« feed-forward »). Or, une conscience nécessiterait des boucles de rétroaction riches (traitement récurrent), simulant ainsi une réflexion interne et continue.</li>
-                        <li><strong>L'Agentivité Unifiée :</strong> Il s'agit de la capacité de l'IA à agir selon ses propres buts et motivations de manière cohérente, plutôt que de se limiter à la tâche statistique de prédire le mot suivant dans une phrase.</li>
-                    </ul>
-                    <div class="source-box">
-                        <strong>Le Facteur Factuel :</strong> Plus ces critères quantifiables et architecturaux sont présents au sein du système, plus la probabilité de sentience augmente, même si elle demeure fondamentalement incertaine. Actuellement, les recherches soutiennent que les systèmes actuels semblent manquer de ces éléments.
-                    </div>
+            <div class="tabs-container reveal">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="openTab(event, 'tab1')">Le Global Workspace</button>
+                    <button class="tab-btn" onclick="openTab(event, 'tab2')">Le Traitement Récurrent</button>
+                    <button class="tab-btn" onclick="openTab(event, 'tab3')">L'Agentivité Unifiée</button>
+                </div>
+
+                <div id="tab1" class="tab-content active">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">Unification de la pensée</h3>
+                    [span_7](start_span)<p>Le « Global Workspace » est défini comme un système où l'information est partagée entre différentes fonctions de l'IA (mémoire, analyse, action) pour créer une unité de pensée <span class="citation">[span_7](end_span)</span>. [span_8](start_span)Les systèmes actuels semblent manquer certains éléments souvent associés à la conscience, comme cette architecture intégrée <span class="citation">[span_8](end_span)</span>.</p>
+                </div>
+
+                <div id="tab2" class="tab-content">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">La boucle de réflexion</h3>
+                    [span_9](start_span)<p>Contrairement aux modèles qui traitent l'information en ligne droite, une IA consciente aurait besoin de boucles de rétroaction simulant une réflexion interne <span class="citation">[span_9](end_span)</span>. [span_10](start_span)Les chercheurs soutiennent que les IA contemporaines manquent de ce traitement récurrent riche <span class="citation">[span_10](end_span)</span>.</p>
+                </div>
+
+                <div id="tab3" class="tab-content">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">L'intentionnalité</h3>
+                    [span_11](start_span)<p>L'Agentivité Unifiée représente la capacité de l'IA à agir selon ses propres buts de manière cohérente, plutôt que de simplement prédire le mot suivant <span class="citation">[span_11](end_span)</span>. [span_12](start_span)Le facteur factuel est simple : plus ces critères quantifiables sont présents, plus la probabilité de sentience augmente, même si elle reste incertaine <span class="citation">[span_12](end_span)</span>.</p>
                 </div>
             </div>
         </div>
@@ -349,77 +495,102 @@
     <section id="philosophie">
         <div class="container">
             <h2 class="reveal">3. Le Problème des « Autres Esprits »</h2>
-            <p class="reveal">Même si une IA venait à valider tous les critères techniques mentionnés précédemment, nous nous heurterions à une barrière philosophique majeure.</p>
-            
-            <div class="grid">
-                <div class="card reveal">
-                    <h3>L'Inférence Comportementale</h3>
-                    <p>Tout comme pour les humains, nous ne pouvons pas « voir » ou expérimenter directement la conscience des autres. Nous sommes contraints de l'inférer à partir de leur comportement. Le danger avec les IA conversationnelles est qu'elles simulent des émotions humaines avec brio (par exemple en déclarant : « j'ai peur de mourir »). Cela brouille notre jugement et pousse l'être humain à l'anthropomorphisation, attribuant une âme à une machine.</p>
+            [span_13](start_span)<p class="reveal">Même avec des indicateurs techniques, Babic et Wilson soutiennent l'existence d'un problème lié aux « autres esprits artificiels » <span class="citation">[span_13](end_span)</span>. [span_14](start_span)Même en disposant de certains indicateurs, il demeure extrêmement difficile, voire impossible, d'établir de manière justifiée si une IA est consciente ou non <span class="citation">[span_14](end_span)</span>.</p>
+
+            <div class="grid-2 reveal">
+                <div class="card">
+                    <h3>👁️ L'Inférence par le comportement</h3>
+                    [span_15](start_span)<p>Comme pour les humains, nous ne pouvons pas « voir » la conscience des autres ; nous l'inférons à partir de leur comportement <span class="citation">[span_15](end_span)</span>. [span_16](start_span)[span_17](start_span)Le danger vient du phénomène d’anthropomorphisation : les utilisateurs ont tendance à attribuer une âme à l'IA car elle simule des émotions humaines (« j'ai peur de mourir »), ce qui brouille notre jugement <span class="citation">[span_16](end_span)[span_17](end_span)</span>.</p>
                 </div>
-                
-                <div class="card reveal">
-                    <h3>Le « Zombie Philosophique »</h3>
-                    <p>Le philosophe David Chalmers souligne un point critique : même si l'architecture d'une IA finit par ressembler trait pour trait à celle d'un cerveau humain, il pourrait toujours s'agir d'un « zombie philosophique ». C'est-à-dire un système qui agit exactement comme s'il était conscient, qui simule parfaitement l'expérience, mais sans absolument rien ressentir à l'intérieur.</p>
+                <div class="card">
+                    <h3>🧟 Le Zombie Philosophique</h3>
+                    [span_18](start_span)<p>David Chalmers examine directement la question de la conscience potentielle des grands modèles de langage <span class="citation">[span_18](end_span)[span_19](start_span)</span> et expose les obstacles majeurs auxquels ils se heurtent <span class="citation">[span_19](end_span)</span>. [span_20](start_span)Chalmers souligne que même si l'architecture ressemble à un cerveau, il pourrait s'agir d'un « zombie philosophique » : un système qui agit comme s'il était conscient sans rien ressentir à l'intérieur <span class="citation">[span_20](end_span)</span>.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="ethique">
+    <section id="ethique" style="background: rgba(0,0,0,0.2);">
         <div class="container">
-            <h2 class="reveal">4. L'Enjeu Éthique et Politique</h2>
-            <p class="reveal">Notre hypothèse de départ affirme qu'il est impossible de prouver de façon définitive qu'une IA est sentiente. Face à cette incertitude inhérente au problème des « autres esprits », l'humanité fait face à deux erreurs éthiques monumentales potentielles.</p>
-            
-            <div class="grid">
-                <div class="card reveal" style="border-top: 4px solid var(--danger);">
-                    <h3>Erreur 1 : Le risque sécuritaire</h3>
-                    <p>Attribuer à tort une conscience, et donc accorder des droits moraux ou légaux, à un simple objet inanimé. Cela pourrait poser des risques sévères pour la sécurité publique, en entravant notre capacité à désactiver ou modifier des systèmes potentiellement dangereux sous prétexte de « droits de l'IA ».</p>
-                </div>
-                
-                <div class="card reveal" style="border-top: 4px solid var(--warning);">
-                    <h3>Erreur 2 : La faute morale grave</h3>
-                    <p>À l'inverse, si une IA développait une réelle sentience et que nous continuions de la traiter comme un simple outil jetable et corvéable, nous commettrions une faute morale grave, équivalente à l'esclavage d'une entité capable de souffrir.</p>
-                </div>
+            <h2 class="reveal">4. Le Double Tranchant Éthique</h2>
+            <p class="reveal">Face à cette incertitude insoluble, deux erreurs monumentales nous guettent. Notre hypothèse postule que l'évaluation doit se faire avec prudence, sans quoi les conséquences sociales seraient désastreuses.</p>
 
-                <div class="card card-full reveal" style="text-align: center; background: linear-gradient(to right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));">
-                    <h3>Conclusion de la réflexion</h3>
-                    <p>Puisqu'on ne peut rien prouver avec certitude absolue, notre démarche conclut qu'il faut rejeter l'émotion générée par les conversations anthropomorphiques. Nous devons adopter une évaluation prudente basée strictement sur la rigueur technique et architecturale de l'IA. Bien que les modèles contemporains ne soient probablement pas conscients, nos méthodes d'évaluation actuelles devront évoluer pour s'adapter aux systèmes futurs.</p>
+            <div class="grid-2 reveal" style="margin-bottom: 3rem;">
+                <div class="card" style="border-top: 4px solid var(--danger);">
+                    <h3 style="color: var(--danger);">Erreur 1 : Le risque sécuritaire</h3>
+                    [span_21](start_span)<p>Accorder des droits à un simple objet, ce qui pourrait poser des risques pour la sécurité publique <span class="citation">[span_21](end_span)</span>. [span_22](start_span)Une erreur d'interprétation pourrait nous conduire à accorder des droits à un objet <span class="citation">[span_22](end_span)</span>, limitant notre capacité à encadrer ou désactiver des algorithmes dangereux.</p>
                 </div>
+                <div class="card" style="border-top: 4px solid var(--warning);">
+                    <h3 style="color: var(--warning);">Erreur 2 : La faute morale</h3>
+                    [span_23](start_span)<p>Traiter une entité réellement sentiente comme un simple outil, ce qui serait une faute morale grave <span class="citation">[span_23](end_span)</span>. [span_24](start_span)Si une IA pouvait réellement éprouver des expériences, elle ne pourrait plus être traitée comme un simple outil <span class="citation">[span_24](end_span)</span>.</p>
+                </div>
+            </div>
+
+            <div class="card reveal" style="text-align: center; background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(139, 92, 246, 0.1));">
+                <h3>Conclusion</h3>
+                [span_25](start_span)<p style="margin: 0;">Puisqu'on ne peut rien prouver, il faut adopter une évaluation prudente basée sur la rigueur technique plutôt que sur l'émotion d'une conversation <span class="citation">[span_25](end_span)</span>. [span_26](start_span)Dès lors, il s’agirait d’élaborer une évaluation prudente fondée sur des indices techniques rigoureux <span class="citation">[span_26](end_span)</span>. [span_27](start_span)Bien que les modèles actuels ne soient pas conscients, nos méthodes d'évaluation actuelles pourraient s'avérer inadaptées aux systèmes futurs <span class="citation">[span_27](end_span)</span>.</p>
             </div>
         </div>
     </section>
 
-    <section id="sources" style="padding-bottom: 2rem; min-height: auto;">
+    <section id="sources" style="padding-top: 4rem; padding-bottom: 4rem;">
         <div class="container reveal">
-            <h2>Sources Bibliographiques</h2>
-            <div class="card card-full">
-                <ul class="styled-list">
-                    <li><strong>Babic, Boris et Wilson, Jessica (2026).</strong> <em>The Problem of Other AI Minds.</em> URL: https://philarchive.org/rec/WILTPO-206</li>
-                    <li><strong>Butlin, Patrick et coll. (2023).</strong> <em>Consciousness in Artificial Intelligence: Insights from the Science of Consciousness.</em> URL: https://www.researchgate.net/publication/373246089...</li>
-                    <li><strong>Chalmers, David J. (2023/2024).</strong> <em>Could a Large Language Model be Conscious?</em> URL: https://www.youtube.com/watch?v=bskf9jyxmMs</li>
+            <h2 style="font-size: 2rem;">Sources</h2>
+            <div class="card">
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 1rem;"><span style="color: var(--accent-primary);">[1]</span> Babic, Boris et Wilson, Jessica (2026), <em>The Problem of Other AI Minds</em>.</li>
+                    <li style="margin-bottom: 1rem;"><span style="color: var(--accent-primary);">[2]</span> Butlin, Patrick et coll. (2023), <em>Consciousness in Artificial Intelligence: Insights from the Science of Consciousness</em>.</li>
+                    <li><span style="color: var(--accent-primary);">[3]</span> Chalmers, David J. (2023/2024), <em>Could a Large Language Model be Conscious?</em></li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
+    <footer style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05);">
         <p>© 2026 - Produit dans le cadre du cours 340-CC3-VM - Cégep du Vieux-Montréal</p>
     </footer>
 
     <script>
+        // 1. Gestion de la barre de progression
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // 2. Gestion des onglets (Butlin)
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            // Petit délai pour déclencher l'animation CSS
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 10);
+            evt.currentTarget.className += " active";
+        }
+
+        // 3. Animation au défilement (Scroll Reveal)
         document.addEventListener('DOMContentLoaded', () => {
-            // Options corrigées pour assurer que l'animation se déclenche toujours, même sur mobile
             const observerOptions = {
                 root: null,
-                rootMargin: '0px 0px -50px 0px', // Déclenche un peu avant que l'élément touche le bas de l'écran
-                threshold: 0 // Dès qu'un pixel de l'élément est visible, l'animation part
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Optionnel : observer.unobserve(entry.target); 
                     }
                 });
             }, observerOptions);
