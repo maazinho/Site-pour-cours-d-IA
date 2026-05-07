@@ -38,7 +38,7 @@
             overflow-x: hidden; 
         }
 
-        /* === ARRIÈRE-PLAN (Correction du bug de l'espace vide en bas) === */
+        /* === ARRIÈRE-PLAN === */
         .bg-container {
             position: fixed;
             top: 0;
@@ -78,7 +78,7 @@
             width: 0%;
         }
 
-        /* === NAVIGATION (Le Filtre) === */
+        /* === NAVIGATION === */
         nav {
             position: fixed;
             top: 4px; 
@@ -110,7 +110,7 @@
 
         /* === HEADER === */
         header {
-            padding: 10rem 2rem 4rem; /* 10rem donne un bel espace sous le filtre/menu */
+            padding: 10rem 2rem 4rem; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -119,7 +119,7 @@
         }
 
         .academic-details {
-            margin-bottom: 2rem; /* Espace équilibré entre la carte et le titre */
+            margin-bottom: 8rem; /* <-- ESPACE AUGMENTÉ ICI */
             padding: 2rem 3rem;
             background: rgba(21, 30, 50, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -171,6 +171,8 @@
             max-width: 800px;
             font-weight: 400;
             line-height: 1.6;
+            text-align: center; /* <-- TEXTE CENTRÉ ICI */
+            margin: 0 auto;     /* <-- BLOC CENTRÉ ICI */
         }
 
         /* === SECTIONS GÉNÉRALES === */
