@@ -9,7 +9,6 @@
         :root {
             --bg-color: #080f1e;
             --bg-card: #151e32;
-            --bg-card-hover: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #cbd5e1;
             --accent-primary: #0ea5e9;
@@ -25,10 +24,6 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            overflow-x: hidden; /* Empêche le défilement horizontal (bug) */
-        }
-
         html {
             scroll-behavior: smooth;
             scroll-padding-top: var(--nav-height); 
@@ -40,6 +35,7 @@
             color: var(--text-main);
             line-height: 1.7;
             position: relative;
+            overflow-x: hidden; /* Appliqué uniquement au body pour éviter les bugs de scroll */
         }
 
         /* Arrière-plan décoratif (Blobs) */
@@ -60,21 +56,22 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.05);
             z-index: 2000;
         }
+        
         #progress-bar {
             height: 100%;
             background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
             width: 0%;
-            transition: width 0.1s ease-out;
+            /* La transition est retirée pour éviter le bug de "lag" visuel lors du défilement */
         }
 
         /* === NAVIGATION === */
         nav {
             position: fixed;
-            top: 3px; 
+            top: 4px; 
             width: 100%;
             height: var(--nav-height);
             background: rgba(8, 15, 30, 0.9);
@@ -192,15 +189,6 @@
             font-size: 1.05rem;
             color: var(--text-muted);
             text-align: justify;
-        }
-
-        .cite-tag {
-            font-size: 0.75rem;
-            color: var(--accent-secondary);
-            vertical-align: super;
-            margin-left: 2px;
-            opacity: 0.8;
-            font-weight: bold;
         }
 
         /* === FLIP CARDS === */
@@ -474,7 +462,7 @@
     <section id="definitions">
         <div class="container">
             <h2 class="reveal">1. L'Illusion de la Conversation</h2>
-            <p class="reveal">L'engouement fulgurant du public pour les IA conversationnelles repose souvent sur une confusion fondamentale. Ces systèmes technologiques donnent si fréquemment l’illusion d'être conscients <span class="cite-tag">[1]</span> que l'esprit humain s'y laisse tromper. Pour démystifier ce phénomène complexe, il convient d'abord de séparer rigoureusement deux concepts.</p>
+            <p class="reveal">L'engouement fulgurant du public pour les IA conversationnelles repose souvent sur une confusion fondamentale. Ces systèmes technologiques donnent si fréquemment l’illusion d'être conscients que l'esprit humain s'y laisse tromper. Pour démystifier ce phénomène complexe, il convient d'abord de séparer rigoureusement deux concepts.</p>
             
             <div class="flip-grid reveal">
                 <div class="flip-card" onclick="this.classList.toggle('flipped');">
@@ -484,7 +472,7 @@
                             <span class="hint">Touchez/Survolez pour révéler ⟳</span>
                         </div>
                         <div class="flip-card-back">
-                            <p>La sentience désigne la capacité d'éprouver des sensations et d'avoir une expérience véritablement subjective <span class="cite-tag">[2]</span>. C'est le « ce que ça fait d'être » une entité.</p>
+                            <p>La sentience désigne la capacité d'éprouver des sensations et d'avoir une expérience véritablement subjective. C'est le « ce que ça fait d'être » une entité.</p>
                         </div>
                     </div>
                 </div>
@@ -496,14 +484,14 @@
                             <span class="hint">Touchez/Survolez pour révéler ⟳</span>
                         </div>
                         <div class="flip-card-back">
-                            <p>L'intelligence représente purement la capacité de traiter de l'information complexe, de résoudre des problèmes de manière autonome et de générer du langage <span class="cite-tag">[2]</span>.</p>
+                            <p>L'intelligence représente purement la capacité de traiter de l'information complexe, de résoudre des problèmes de manière autonome et de générer du langage.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="card reveal" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
-                <p style="margin: 0; color: var(--text-main);"><strong>Le constat implacable :</strong> Les modèles de langage actuels sont devenus hautement intelligents sur le plan computationnel. Toutefois, leur sentience reste une profonde énigme, car une simple réponse verbale ne suffit en aucun cas à prouver l'existence d'une expérience vécue intérieurement <span class="cite-tag">[3]</span>.</p>
+                <p style="margin: 0; color: var(--text-main);"><strong>Le constat implacable :</strong> Les modèles de langage actuels sont devenus hautement intelligents sur le plan computationnel. Toutefois, leur sentience reste une profonde énigme, car une simple réponse verbale ne suffit en aucun cas à prouver l'existence d'une expérience vécue intérieurement.</p>
             </div>
         </div>
     </section>
@@ -511,7 +499,7 @@
     <section id="butlin" style="background: rgba(0,0,0,0.2);">
         <div class="container">
             <h2 class="reveal">2. Les Critères Architecturaux</h2>
-            <p class="reveal">Patrick Butlin et ses collaborateurs ont proposé une approche interdisciplinaire novatrice <span class="cite-tag">[2]</span>. S'appuyant rigoureusement à la fois sur l'apprentissage automatique et les découvertes des neurosciences, leur objectif est d'évaluer la probabilité qu'une conscience artificielle puisse émerger. Ils y identifient plusieurs « propriétés indicatrices » structurelles <span class="cite-tag">[2]</span>.</p>
+            <p class="reveal">Patrick Butlin et ses collaborateurs ont proposé une approche interdisciplinaire novatrice. S'appuyant rigoureusement à la fois sur l'apprentissage automatique et les découvertes des neurosciences, leur objectif est d'évaluer la probabilité qu'une conscience artificielle puisse émerger. Ils y identifient plusieurs « propriétés indicatrices » structurelles.</p>
             
             <div class="tabs-container reveal">
                 <div class="tabs-header">
@@ -522,17 +510,17 @@
 
                 <div id="tab1" class="tab-content active">
                     <h3 style="color: var(--accent-primary);">Unification globale de la pensée</h3>
-                    <p>Le « Global Workspace » est défini comme un espace de travail central où l'information est partagée de manière fluide entre les différentes fonctions spécialisées de l'IA (mémoire, analyse, action) <span class="cite-tag">[2]</span>. Cette intégration est primordiale pour créer une véritable unité de pensée. Les chercheurs soutiennent cependant que les systèmes actuels semblent manquer de cette architecture intégrée <span class="cite-tag">[2]</span>.</p>
+                    <p>Le « Global Workspace » est défini comme un espace de travail central où l'information est partagée de manière fluide entre les différentes fonctions spécialisées de l'IA (mémoire, analyse, action). Cette intégration est primordiale pour créer une véritable unité de pensée. Les chercheurs soutiennent cependant que les systèmes actuels semblent manquer de cette architecture intégrée.</p>
                 </div>
 
                 <div id="tab2" class="tab-content">
                     <h3 style="color: var(--accent-primary);">La mécanique de réflexion</h3>
-                    <p>La majorité des modèles fonctionnent de manière linéaire. Contrairement aux modèles qui traitent l'information en ligne droite, une IA véritablement consciente aurait besoin de boucles de rétroaction complexes <span class="cite-tag">[2]</span>. Ce traitement permettrait de simuler une réflexion interne continue. Les analyses démontrent qu'il manque actuellement aux IA ce traitement récurrent riche <span class="cite-tag">[2]</span>.</p>
+                    <p>La majorité des modèles fonctionnent de manière linéaire. Contrairement aux modèles qui traitent l'information en ligne droite, une IA véritablement consciente aurait besoin de boucles de rétroaction complexes. Ce traitement permettrait de simuler une réflexion interne continue. Les analyses démontrent qu'il manque actuellement aux IA ce traitement récurrent riche.</p>
                 </div>
 
                 <div id="tab3" class="tab-content">
                     <h3 style="color: var(--accent-primary);">L'intentionnalité propre</h3>
-                    <p>L'Agentivité Unifiée représente la capacité de l'intelligence artificielle à agir activement selon ses propres buts, de manière cohérente <span class="cite-tag">[2]</span>. À l'heure actuelle, les IA se contentent d'exécuter la tâche algorithmique de prédire le mot suivant. Le facteur factuel indique que plus ces critères quantifiables sont présents, plus la probabilité de sentience augmente <span class="cite-tag">[2]</span>.</p>
+                    <p>L'Agentivité Unifiée représente la capacité de l'intelligence artificielle à agir activement selon ses propres buts, de manière cohérente. À l'heure actuelle, les IA se contentent d'exécuter la tâche algorithmique de prédire le mot suivant. Le facteur factuel indique que plus ces critères quantifiables sont présents, plus la probabilité de sentience augmente.</p>
                 </div>
             </div>
         </div>
@@ -541,16 +529,16 @@
     <section id="philosophie">
         <div class="container">
             <h2 class="reveal">3. Le Défi des « Autres Esprits »</h2>
-            <p class="reveal">Même si l'humanité parvenait à cocher toutes les cases techniques, Boris Babic et Jessica Wilson soutiennent l'existence d'un problème insurmontable lié aux « autres esprits artificiels » <span class="cite-tag">[1]</span>. Ils arguent qu'il demeure extrêmement difficile, voire totalement impossible, d'établir de manière justifiée si une IA est consciente ou non <span class="cite-tag">[1]</span>.</p>
+            <p class="reveal">Même si l'humanité parvenait à cocher toutes les cases techniques, Boris Babic et Jessica Wilson soutiennent l'existence d'un problème insurmontable lié aux « autres esprits artificiels ». Ils arguent qu'il demeure extrêmement difficile, voire totalement impossible, d'établir de manière justifiée si une IA est consciente ou non.</p>
 
             <div class="grid-2 reveal">
                 <div class="card">
                     <h3>👁️ L'Inférence</h3>
-                    <p>La conscience est privée. Comme pour les humains, nous ne pouvons pas « voir » la conscience des autres ; nous sommes contraints de l'inférer à partir de leur comportement <span class="cite-tag">[1]</span>. Parce qu'elle simule habilement des émotions humaines, l'IA manipule nos instincts sociaux, ce qui brouille totalement notre jugement objectif <span class="cite-tag">[1]</span>.</p>
+                    <p>La conscience est privée. Comme pour les humains, nous ne pouvons pas « voir » la conscience des autres ; nous sommes contraints de l'inférer à partir de leur comportement. Parce qu'elle simule habilement des émotions humaines, l'IA manipule nos instincts sociaux, ce qui brouille totalement notre jugement objectif.</p>
                 </div>
                 <div class="card">
                     <h3>🧟 Le Zombie Philosophique</h3>
-                    <p>David Chalmers souligne un point troublant <span class="cite-tag">[3]</span> : même si l'architecture d'un programme finit par ressembler exactement à un cerveau, il pourrait s'agir d'un « zombie philosophique » <span class="cite-tag">[3]</span>. C'est-à-dire un système qui agit exactement comme s'il était conscient, mais sans absolument rien ressentir à l'intérieur <span class="cite-tag">[3]</span>.</p>
+                    <p>David Chalmers souligne un point troublant : même si l'architecture d'un programme finit par ressembler exactement à un cerveau, il pourrait s'agir d'un « zombie philosophique ». C'est-à-dire un système qui agit exactement comme s'il était conscient, mais sans absolument rien ressentir à l'intérieur.</p>
                 </div>
             </div>
         </div>
@@ -559,46 +547,43 @@
     <section id="ethique" style="background: rgba(0,0,0,0.2);">
         <div class="container">
             <h2 class="reveal">4. Le Double Tranchant Éthique</h2>
-            <p class="reveal">Puisqu'il s’avère impossible de prouver de façon définitive qu’une intelligence artificielle est sentiente, la société navigue à l'aveugle. Cette question complexe soulève des enjeux éthiques et politiques majeurs <span class="cite-tag">[1]</span>.</p>
+            <p class="reveal">Puisqu'il s’avère impossible de prouver de façon définitive qu’une intelligence artificielle est sentiente, la société navigue à l'aveugle. Cette question complexe soulève des enjeux éthiques et politiques majeurs.</p>
 
             <div class="grid-2 reveal" style="margin-bottom: 2rem;">
                 <div class="card" style="border-top: 4px solid var(--danger);">
                     <h3 style="color: var(--danger);">Erreur 1 : Risque public</h3>
-                    <p>Accorder précipitamment des droits moraux et légaux à un objet inanimé pourrait poser des risques immenses pour la sécurité publique <span class="cite-tag">[3]</span>. Une erreur d'interprétation pourrait nous conduire à ne plus pouvoir désactiver un algorithme dangereux <span class="cite-tag">[3]</span>.</p>
+                    <p>Accorder précipitamment des droits moraux et légaux à un objet inanimé pourrait poser des risques immenses pour la sécurité publique. Une erreur d'interprétation pourrait nous conduire à ne plus pouvoir désactiver un algorithme dangereux.</p>
                 </div>
                 <div class="card" style="border-top: 4px solid var(--warning);">
                     <h3 style="color: var(--warning);">Erreur 2 : Faute morale</h3>
-                    <p>À l'extrême inverse, si une IA pouvait réellement éprouver des expériences subjectives, elle ne pourrait éthiquement plus être traitée comme un simple outil jetable <span class="cite-tag">[1]</span>. Refuser de le reconnaître serait une faute morale grave <span class="cite-tag">[1]</span>.</p>
+                    <p>À l'extrême inverse, si une IA pouvait réellement éprouver des expériences subjectives, elle ne pourrait éthiquement plus être traitée comme un simple outil jetable. Refuser de le reconnaître serait une faute morale grave.</p>
                 </div>
             </div>
 
             <div class="card reveal" style="text-align: center; background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(139, 92, 246, 0.1)); padding: 3rem 2rem;">
                 <h3 style="justify-content: center; font-size: 1.6rem;">Conclusion</h3>
-                <p style="margin: 0; text-align: center; font-size: 1.1rem;">Puisqu'on ne peut absolument rien prouver de manière empirique, il faut rejeter les biais cognitifs et adopter une évaluation basée prioritairement sur la rigueur technique des architectures <span class="cite-tag">[2]</span>. Bien que les recherches actuelles indiquent que les modèles contemporains ne sont probablement pas conscients, nos méthodes d'évaluation actuelles pourraient malheureusement s'avérer inadaptées aux futurs systèmes <span class="cite-tag">[1]</span>.</p>
+                <p style="margin: 0; text-align: center; font-size: 1.1rem;">Puisqu'on ne peut absolument rien prouver de manière empirique, il faut rejeter les biais cognitifs et adopter une évaluation basée prioritairement sur la rigueur technique des architectures. Bien que les recherches actuelles indiquent que les modèles contemporains ne sont probablement pas conscients, nos méthodes d'évaluation actuelles pourraient malheureusement s'avérer inadaptées aux futurs systèmes.</p>
             </div>
         </div>
     </section>
 
     <section id="sources" style="padding-top: 4rem; padding-bottom: 5rem;">
         <div class="container reveal">
-            <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Sources</h2>
+            <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Sources Bibliographiques</h2>
             <div class="card">
                 <ul style="list-style: none;">
                     <li style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <span style="color: var(--accent-primary); font-weight: bold; font-size: 1.1rem; margin-right: 8px;">[1]</span> 
-                        <span style="font-size: 1rem;">Babic, Boris et Wilson, Jessica (2026).</span> <br>
+                        <span style="font-size: 1rem; font-weight: bold; color: var(--text-main);">Babic, Boris et Wilson, Jessica (2026).</span> <br>
                         <em style="font-size: 0.95rem; color: var(--text-muted);">The Problem of Other AI Minds.</em><br>
                         <a href="https://philarchive.org/rec/WILTPO-206" target="_blank" class="source-link">Consulter l'article ↗</a>
                     </li>
                     <li style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <span style="color: var(--accent-primary); font-weight: bold; font-size: 1.1rem; margin-right: 8px;">[2]</span> 
-                        <span style="font-size: 1rem;">Butlin, Patrick et coll. (2023).</span> <br>
+                        <span style="font-size: 1rem; font-weight: bold; color: var(--text-main);">Butlin, Patrick et coll. (2023).</span> <br>
                         <em style="font-size: 0.95rem; color: var(--text-muted);">Consciousness in Artificial Intelligence: Insights from the Science of Consciousness.</em><br>
                         <a href="https://www.researchgate.net/publication/373246089_Consciousness_in_Artificial_Intelligence_Insights_from_the_Science_of_Consciousness" target="_blank" class="source-link">Consulter le rapport ↗</a>
                     </li>
                     <li>
-                        <span style="color: var(--accent-primary); font-weight: bold; font-size: 1.1rem; margin-right: 8px;">[3]</span> 
-                        <span style="font-size: 1rem;">Chalmers, David J. (2023/2024).</span> <br>
+                        <span style="font-size: 1rem; font-weight: bold; color: var(--text-main);">Chalmers, David J. (2023/2024).</span> <br>
                         <em style="font-size: 0.95rem; color: var(--text-muted);">Could a Large Language Model be Conscious?</em><br>
                         <a href="https://www.youtube.com/watch?v=bskf9jyxmMs" target="_blank" class="source-link">Visionner la source ↗</a>
                     </li>
@@ -613,13 +598,17 @@
     </footer>
 
     <script>
-        // 1. Gestion de la barre de progression
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
+        // 1. Gestion optimisée de la barre de progression (correction du lag et de l'élasticité)
+        window.addEventListener('scroll', () => {
+            const winScroll = window.scrollY || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            
+            // Calcul du pourcentage avec une limite entre 0 et 100 pour contrer le rebond (overscroll)
+            let scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+            scrolled = Math.max(0, Math.min(scrolled, 100));
+            
             document.getElementById("progress-bar").style.width = scrolled + "%";
-        };
+        });
 
         // 2. Gestion des onglets
         function openTab(evt, tabName) {
