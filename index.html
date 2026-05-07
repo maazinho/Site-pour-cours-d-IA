@@ -38,14 +38,25 @@
             overflow-x: hidden; 
         }
 
-        /* Arrière-plan décoratif (Blobs) */
+        /* === ARRIÈRE-PLAN (Correction du bug de l'espace vide en bas) === */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .bg-blob {
             position: absolute;
             filter: blur(100px);
             opacity: 0.12;
-            z-index: -1;
             border-radius: 50%;
         }
+        
         .blob-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: var(--accent-primary); }
         .blob-2 { top: 40%; right: -20%; width: 50vw; height: 50vw; background: var(--accent-secondary); }
         .blob-3 { bottom: -10%; left: 20%; width: 30vw; height: 30vw; background: var(--accent-primary); }
@@ -67,7 +78,7 @@
             width: 0%;
         }
 
-        /* === NAVIGATION === */
+        /* === NAVIGATION (Le Filtre) === */
         nav {
             position: fixed;
             top: 4px; 
@@ -99,8 +110,7 @@
 
         /* === HEADER === */
         header {
-            /* Augmentation de l'espace en haut (12rem) et réduction en bas (1rem) */
-            padding: 12rem 2rem 1rem;
+            padding: 10rem 2rem 4rem; /* 10rem donne un bel espace sous le filtre/menu */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -109,7 +119,7 @@
         }
 
         .academic-details {
-            margin-bottom: 1.5rem; 
+            margin-bottom: 2rem; /* Espace équilibré entre la carte et le titre */
             padding: 2rem 3rem;
             background: rgba(21, 30, 50, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -117,12 +127,13 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
             
-            /* Centrage forcé */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            max-width: 600px;
+            width: 100%;
         }
 
         .academic-details p {
@@ -147,7 +158,7 @@
         header h1 {
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #fff, var(--text-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -434,16 +445,17 @@
             
             p { font-size: 1rem; }
             h2 { font-size: 1.6rem; }
-            /* Ajustement pour mobile */
-            header { padding-top: 8rem; padding-bottom: 1rem; }
+            header { padding-top: 8rem; padding-bottom: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
-    <div class="bg-blob blob-3"></div>
+    <div class="bg-container">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+    </div>
 
     <div id="progress-container">
         <div id="progress-bar"></div>
@@ -578,7 +590,7 @@
         </div>
     </section>
 
-    <section id="sources" style="padding-top: 4rem; padding-bottom: 0.5rem;"> 
+    <section id="sources" style="padding-top: 4rem; padding-bottom: 4rem;"> 
         <div class="container reveal">
             <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Sources Bibliographiques</h2>
             <div class="card">
@@ -603,7 +615,7 @@
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 1rem 1rem 0.5rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3);">
+    <footer style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3); width: 100%;">
         <p style="margin: 0; font-size: 0.9rem;">© 2026 - Produit dans le cadre du cours 340-CC3-VM - Cégep du Vieux-Montréal</p>
         <p style="margin: 0; font-size: 0.8rem; opacity: 0.6;">Mohamed Maazoun, Noémie Desgroseilliers, Alexey Lutsenko</p>
     </footer>
