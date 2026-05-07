@@ -35,7 +35,7 @@
             color: var(--text-main);
             line-height: 1.7;
             position: relative;
-            overflow-x: hidden; /* Appliqué uniquement au body pour éviter les bugs de scroll */
+            overflow-x: hidden; 
         }
 
         /* Arrière-plan décoratif (Blobs) */
@@ -65,7 +65,6 @@
             height: 100%;
             background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
             width: 0%;
-            /* La transition est retirée pour éviter le bug de "lag" visuel lors du défilement */
         }
 
         /* === NAVIGATION === */
@@ -100,29 +99,37 @@
 
         /* === HEADER === */
         header {
-            min-height: 100vh;
+            /* Retrait du min-height: 100vh pour éviter les gros vides */
+            padding: 9rem 2rem 5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: calc(var(--nav-height) + 2rem) 2rem 2rem;
             text-align: center;
         }
 
         .academic-details {
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem; /* Espace réduit entre la carte et le gros titre (était à 3rem) */
             padding: 2rem 3rem;
             background: rgba(21, 30, 50, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
+            
+            /* Centrage forcé */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
         .academic-details p {
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 0.3rem;
+            text-align: center; /* Centrage forcé */
         }
 
         .academic-details .names {
@@ -133,6 +140,8 @@
             letter-spacing: 0.5px;
             padding-bottom: 0.8rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center; /* Centrage forcé */
+            width: 100%;
         }
 
         header h1 {
@@ -155,7 +164,7 @@
 
         /* === SECTIONS GÉNÉRALES === */
         section {
-            padding: 6rem 2rem;
+            padding: 5rem 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -425,6 +434,7 @@
             
             p { font-size: 1rem; }
             h2 { font-size: 1.6rem; }
+            header { padding-top: 7rem; padding-bottom: 3rem; }
         }
     </style>
 </head>
@@ -567,8 +577,7 @@
         </div>
     </section>
 
-    <section id="sources" style="padding-top: 4rem; padding-bottom: 5rem;">
-        <div class="container reveal">
+    <section id="sources" style="padding-top: 4rem; padding-bottom: 2rem;"> <div class="container reveal">
             <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Sources Bibliographiques</h2>
             <div class="card">
                 <ul style="list-style: none;">
@@ -592,18 +601,17 @@
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 2.5rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3);">
+    <footer style="text-align: center; padding: 1.5rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3);">
         <p style="margin: 0; font-size: 0.9rem;">© 2026 - Produit dans le cadre du cours 340-CC3-VM - Cégep du Vieux-Montréal</p>
         <p style="margin: 0; font-size: 0.8rem; opacity: 0.6;">Mohamed Maazoun, Noémie Desgroseilliers, Alexey Lutsenko</p>
     </footer>
 
     <script>
-        // 1. Gestion optimisée de la barre de progression (correction du lag et de l'élasticité)
+        // 1. Gestion optimisée de la barre de progression
         window.addEventListener('scroll', () => {
             const winScroll = window.scrollY || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             
-            // Calcul du pourcentage avec une limite entre 0 et 100 pour contrer le rebond (overscroll)
             let scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
             scrolled = Math.max(0, Math.min(scrolled, 100));
             
