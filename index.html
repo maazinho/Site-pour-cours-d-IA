@@ -99,8 +99,8 @@
 
         /* === HEADER === */
         header {
-            /* Retrait du min-height: 100vh pour éviter les gros vides */
-            padding: 9rem 2rem 5rem;
+            /* Augmentation de l'espace en haut (12rem) et réduction en bas (1rem) */
+            padding: 12rem 2rem 1rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -109,7 +109,7 @@
         }
 
         .academic-details {
-            margin-bottom: 1.5rem; /* Espace réduit entre la carte et le gros titre (était à 3rem) */
+            margin-bottom: 1.5rem; 
             padding: 2rem 3rem;
             background: rgba(21, 30, 50, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -129,7 +129,7 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 0.3rem;
-            text-align: center; /* Centrage forcé */
+            text-align: center; 
         }
 
         .academic-details .names {
@@ -140,7 +140,7 @@
             letter-spacing: 0.5px;
             padding-bottom: 0.8rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            text-align: center; /* Centrage forcé */
+            text-align: center; 
             width: 100%;
         }
 
@@ -434,7 +434,8 @@
             
             p { font-size: 1rem; }
             h2 { font-size: 1.6rem; }
-            header { padding-top: 7rem; padding-bottom: 3rem; }
+            /* Ajustement pour mobile */
+            header { padding-top: 8rem; padding-bottom: 1rem; }
         }
     </style>
 </head>
@@ -577,7 +578,8 @@
         </div>
     </section>
 
-    <section id="sources" style="padding-top: 4rem; padding-bottom: 2rem;"> <div class="container reveal">
+    <section id="sources" style="padding-top: 4rem; padding-bottom: 0.5rem;"> 
+        <div class="container reveal">
             <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Sources Bibliographiques</h2>
             <div class="card">
                 <ul style="list-style: none;">
@@ -601,7 +603,7 @@
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 1.5rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3);">
+    <footer style="text-align: center; padding: 1rem 1rem 0.5rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3);">
         <p style="margin: 0; font-size: 0.9rem;">© 2026 - Produit dans le cadre du cours 340-CC3-VM - Cégep du Vieux-Montréal</p>
         <p style="margin: 0; font-size: 0.8rem; opacity: 0.6;">Mohamed Maazoun, Noémie Desgroseilliers, Alexey Lutsenko</p>
     </footer>
